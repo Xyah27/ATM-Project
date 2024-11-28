@@ -1,4 +1,4 @@
-import com.co.diaz.pages.LoginPage;
+import com.co.diaz.pages.RegisterPage;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
@@ -12,9 +12,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
 
-public class LoginTest {
+public class RegisterTest {
     private WebDriver driver;
-    private LoginPage loginPage;
+    private RegisterPage registerPage;
 
     @BeforeMethod
     public void setup() {
@@ -24,26 +24,26 @@ public class LoginTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
 
-        // Inicializar la página de login
-        loginPage = new LoginPage(driver);
+        // Inicializar la página de registro
+        registerPage = new RegisterPage(driver);
         driver.get("https://opencart.abstracta.us/index.php?route=common/home");
     }
 
-    @Test(dataProvider = "loginData")
-    public void testLogin(String email, String password) {
-        // Navegar a la página de login
-        loginPage.openLoginPage();
+    @Test(dataProvider = "registerData")
+    public void testRegister(String firstName, String lastName, String email, String telephone, String password) {
+        // Navegar a la página de registro
+        registerPage.openRegisterPage();
 
-        // Llenar el formulario de login
-        loginPage.fillLoginForm(email, password);
+        // Llenar el formulario de registro
+        registerPage.fillRegistrationForm(firstName, lastName, email, telephone, password);
 
-        // Hacer clic en el botón de login
-        loginPage.clickLoginButton();
+        // Hacer clic en el botón final de "Continue"
+        registerPage.clickFinalContinueButton();
     }
 
-    @DataProvider(name = "loginData")
-    public Object[][] getLoginData() throws IOException {
-        return readExcelData("src/main/resources/testdata.xlsx", "Sheet1");
+    @DataProvider(name = "registerData")
+    public Object[][] getRegisterData() throws IOException {
+        return readExcelData("src/main/resources/testdata.xlsx", "Sheet3");
     }
 
     public Object[][] readExcelData(String filePath, String sheetName) throws IOException {

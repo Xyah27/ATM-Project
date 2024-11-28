@@ -4,30 +4,34 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
 public class LoginPage {
     private WebDriver driver;
 
-    // Selectores de los elementos del DOM
-    private By myAccountDropdown = By.cssSelector("#top-links > ul > li.dropdown");
-    private By loginOption = By.cssSelector("#top-links > ul > li.dropdown.open > ul > li:nth-child(2)");
-    private By emailInput = By.cssSelector("#input-email");
-    private By passwordInput = By.cssSelector("#input-password");
-    private By loginButton = By.cssSelector("#content > div > div:nth-child(2) > div > form > input");
+    // Selectores
+    private By myAccountMenu = By.xpath("//a[@title='My Account']");
+    private By loginOption = By.linkText("Login");
+    private By emailInput = By.id("input-email");
+    private By passwordInput = By.id("input-password");
+    private By loginButton = By.xpath("//input[@value='Login']");
 
-    // Constructor
     public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    // Métodos para interactuar con los elementos
     public void openLoginPage() {
-        driver.findElement(myAccountDropdown).click();
+        driver.findElement(myAccountMenu).click();
         driver.findElement(loginOption).click();
     }
 
-    public void login(String email, String password) {
+    public void fillLoginForm(String email, String password) {
         driver.findElement(emailInput).sendKeys(email);
         driver.findElement(passwordInput).sendKeys(password);
+    }
+
+    public void clickLoginButton() {
         driver.findElement(loginButton).click();
     }
 }
